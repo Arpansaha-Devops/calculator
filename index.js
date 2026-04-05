@@ -1,49 +1,58 @@
-let input = document.getElementById("display")
-let buttons = document.querySelectorAll(".btn button")
+const input = document.getElementById('display');
+const button = document.querySelectorAll(".btn button");
+
+
 
 
 let first = "";
 let second = "";
 let op = "";
 
-buttons.forEach((item) => {
-    item.addEventListener("click", () => {
-        const value = item.textContent.trim()
-if (!isNaN(value) || value === ".") {
-    if (op === "") {
-        first += value;
-        input.value = first
-    } else {
-        second += value;
-        input.value = `${first} ${op} ${second}`
-    }
-} else if ( (["+","-","x","%"]).includes(value)) {
-    if (first !== "") {
-        op = value;
-        input.value = `${first} ${op}`
-    }
-} else if ( value === "="){
-    calculate()
-} else if(value === "C") {
-    first == "";
-    second == "";
-    op === "";
-}   })
+
+button.forEach((item) => {
+    item.addEventListener('click', () => {
+        const value = item.textContent.trim();
+        if (!isNaN(value) || value === ".") {
+            if (op === "") {
+                first += value;
+                input.value = first;
+            } else {
+                second += value;
+                input.value = `${first} ${op} ${second}`;
+            }
+            
+        } else if (["+","-","x","%"].includes(value)) {
+            if (first !== "") {
+                op = value;
+                input.value = `${first} ${op}`;
+            } else {
+                alert("Please enter a number first.");
+            }
+        } else if (value === "=") {
+            calculate();
+        } else if (value === "C") {
+            first = "";
+            second = "";
+            op = "";
+            input.value = "";
+        }
+    })
 })
 
 
+
 function calculate() {
-    let num1 = parseFloat(first)
-    let num2 = parseFloat(second)
+   let num = parseFloat(first) ;
+   let num2 = parseFloat(second);
 
-    if (isNaN(num1) || isNaN(num2)) return;
+   if (isNaN(num) || isNaN(num2)) return;
 
-    if (op === "+") input.value = num1 + num2;
-    if (op === "-") input.value = num1 - num2;
-    if (op === "x") input.value = num1 * num2;
-    if (op === "%") input.value = num1 % num2;
+   if (op === "+")    input.value = num + num2;
+   else if (op === "-") input.value = num - num2;
+   else if (op === "x") input.value = num * num2;
+   else if (op === "%") input.value = num % num2;
 
-    first = String(input.value);
-    second = ""
-    op = ""
+   first = input.value;
+   second = "";
+   op = "";
 }
